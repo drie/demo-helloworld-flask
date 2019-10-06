@@ -6,16 +6,14 @@ import socket
 
 @app.route("/")
 def hello():
-    return Response("\n".join(
-        ["Hello World!",
-         "I am running on %s" % socket.gethostname(),
-         "You appear to hail from %s" % request.remote_addr,
-         "\nEnvironment:" ] +\
-         map("=".join, os.environ.items()) + \
-         ['\nHeaders:'] +\
-         map("=".join, request.headers.items()) + \
-         ['\n']
-    ), mimetype='text/plain')
+    output = f"""
+        Hello World!\n
+        I am running on {socket.gethostname()}\n
+        You appear to hail from {request.remote_addr}\n\n
+        Environment: {map("=".join, os.environ.items())}\n\n
+        Headers: {map("=".join, request.headers.items())}\n
+    """
+    return Response(output, mimetype='text/plain')
 
 if __name__ == "__main__":
     try:
